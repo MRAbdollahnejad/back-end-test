@@ -59,7 +59,16 @@ public class UserService {
         if(!foundedUser.get().getPassword().equals(newUser.getPassword())){
             throw new SignUpException("WRONG TOKEN");
         }
-
+        if(foundedUser.get().getSearchHistoryList().size()>6){
+            // must be deleted by create time
+            foundedUser.get().getSearchHistoryList().remove(0);
+        }
+        List<SearchHistory> searchHistoryList = foundedUser.get().getSearchHistoryList();
+        for (SearchHistory s: searchHistoryList) {
+            if (s.getName().equals(newUser.getSearchHistoryList().get(0).getName())){
+                throw new SignUpException("already in history");
+            }
+        }
         foundedUser.get().getSearchHistoryList().add(newUser.getSearchHistoryList().get(0));
         return new ProjectResponse("00","saved successfully",newUser.getUsername()+","+newUser.getPassword());
     }
