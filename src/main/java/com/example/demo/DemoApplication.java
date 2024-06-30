@@ -8,6 +8,7 @@ import java.util.Arrays;
 @SpringBootApplication
 public class DemoApplication {
 
+	 static char a;
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
 	}
